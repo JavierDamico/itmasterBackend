@@ -1,6 +1,6 @@
-const { Schema, Types } = require("mongoose");
+const mongoose = require("mongoose");
 
-module.exports = new Schema({
+ let Phone = new mongoose.Schema({
   // _id: Types.ObjectId,
   countryCode: {
     type: String,
@@ -16,7 +16,8 @@ module.exports = new Schema({
     required: true,
   },
   userId: {
-    type: "ObjectId",
-    ref: "User._id",
+    type: mongoose.Types.ObjectId,
+    ref: "User",
   },
 });
+module.exports = mongoose.model('Phone', Phone)

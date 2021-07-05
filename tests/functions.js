@@ -1,29 +1,41 @@
-const mongoose = require("mongoose");
-const UserSchema = require("../src/schemas/User");
-const User = mongoose.model("User", UserSchema);
-const AddressSchema = require("../src/schemas/Address");
-const Address = mongoose.model("Address", AddressSchema);
-const CategorySchema = require("../src/schemas/Categories");
-const Category = mongoose.model("Category", CategorySchema);
-const PaymentSchema = require("../src/schemas/Payment");
-const Payment = mongoose.model("Payment", PaymentSchema);
-const PhoneSchema = require("../src/schemas/Phones");
-const Phone = mongoose.model("Phone", PhoneSchema);
-const ProductSchema = require("../src/schemas/Products");
-const Product = mongoose.model("Product", ProductSchema);
-const PhotoSchema = require("../src/schemas/Photos");
-const Photo = mongoose.model("Photo", PhotoSchema);
-const ProfileSchema = require("../src/schemas/Profile");
-const Profile = mongoose.model("Profile", ProfileSchema);
+const User = require("../src/schemas/User");
+const Address= require("../src/schemas/Address");
+const Category= require("../src/schemas/Categories");
+const Payment= require("../src/schemas/Payment");
+const Phone= require("../src/schemas/Phones");
+const Product= require("../src/schemas/Products");
+const Photo= require("../src/schemas/Photos");
+const Profile= require("../src/schemas/Profile");
+
 
 module.exports = {
+  findUsers(){
+    //este User el lo que se llama metodo estatico o de clase
+    // User.find({email: "cinco@gmail.com"}).then(users => { //aca User es el modelo
+    //   console.log(users)
+    // }).catch(err => {
+    //   console.log(err);
+    // })
+    //------------------------------------------------------------------------------------
+    // let user = new User({email : "cinco@gmail.com"})
+    // user.findByEmail()
+    //     .then(u => console.log(u))
+    //     .catch(err => console.log(err))
+    //------------------------------------------------------------------------------------
+    
+    User.findByToken('71fdbf3b2b62a4e9c58050d88778cea7')
+        .then(u => console.log(u))
+        .catch(err => console.log(err))
+
+  },
   createUser() {
-    //aca creo una instancia de la const User
+    //aca creo una instancia de la const User, el newUser es un usuario en concreto, no es el modelo.
     let newUser = new User({
-      email: "cinco@gmail.com",
+      email: "javi@gmail.com",
       password: "asdf8eriojwa98rj",
     });
     newUser
+    //metodo de instancia
       .save()
       .then((user) => {
         console.log("el id del usuario es  " + user._id);
@@ -84,8 +96,8 @@ module.exports = {
     let newPhone = new Phone({
       countryCode: "54",
       areaCode: "011",
-      number: "12345",
-      userId: User._id
+      number: "1234545567",
+      userId:"60da4f1653dfe32844f41fef"
     });
     newPhone
       .save()
@@ -130,7 +142,7 @@ module.exports = {
     let newProfile = new Profile({
       firstName: "Javier",
       lastName: "D'Amico",
-      birthDate: "1982-03-11",
+      birthDate: new Date (1982,2,10),
       userId: User._id
     });
     newProfile

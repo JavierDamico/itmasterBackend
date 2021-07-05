@@ -1,10 +1,10 @@
-const { Schema, Types } = require("mongoose");
+const mongoose = require("mongoose");
 
-module.exports = new Schema({
-  // _id: Types.ObjectId,
+let Profile = new mongoose.Schema({
+// _id: Types.ObjectId,
   userId: {
-    type: "ObjectId",
-    ref: "User._id",
+    type: mongoose.Types.ObjectId,
+    ref: "User",
   },
   firstName: {
     type: String,
@@ -19,3 +19,4 @@ module.exports = new Schema({
     required: true,
   },
 });
+module.exports = mongoose.model('Profile', Profile)

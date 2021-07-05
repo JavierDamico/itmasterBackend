@@ -1,9 +1,9 @@
-const { Schema, Types } = require("mongoose");
-module.exports = new Schema({
+const mongoose = require("mongoose");
+ let Payment = new mongoose.Schema({
   // _id: Types.ObjectId,
   userId: {
-    type: "ObjectId",
-    ref: "User._id",
+    type: mongoose.Types.ObjectId,
+    ref: "User",
   },
   cardNumber: {
     type: String,
@@ -22,3 +22,4 @@ module.exports = new Schema({
     required: true,
   },
 });
+module.exports = mongoose.model('Payment', Payment)

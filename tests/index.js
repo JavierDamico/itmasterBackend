@@ -21,11 +21,12 @@ db.once("open", function () {
 //     console.log(err);
 //   });
 
-// functions.createUser();
-// functions.createAddress();
-// functions.createCategory();
-// functions.createPayment();
-// functions.createPhone();
-// functions.createProduct();
-// functions.createPhoto();
+functions.findUsers();
+functions.createUser();
+functions.createAddress();
+functions.createCategory();
+functions.createPayment();
+functions.createPhone();
+functions.createProduct();
+functions.createPhoto();
 functions.createProfile();

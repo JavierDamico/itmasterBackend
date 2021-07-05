@@ -1,7 +1,7 @@
-const { Schema, Types } = require("mongoose");
+const mongoose = require('mongoose')
 const md5 = require("md5");
 
-module.exports = new Schema({
+let User = new mongoose.Schema({
   //   _id: Types.ObjectId,
   email: {
     type: String,
@@ -24,3 +24,25 @@ module.exports = new Schema({
     },
   },
 });
+
+/*
+Aca puedo usar directamente el User porque estoy trabajando con el modelo/schema.
+User.findByToken()
+*/
+
+User.statics.findByToken = function (token) {
+  return this.findOne({confirmationToken: token})
+}
+
+/*
+Aca primero creo la instancia
+let user = new User()
+y luego lo uso
+user.findByEmail({email: '...'})
+*/
+
+User.methods.findByEmail = function (cb) {
+  return mongoose.model('User').find({email : this.email}, cb)
+}
+
+module.exports = mongoose.model('User', User)

@@ -1,6 +1,6 @@
-const { Schema, Types } = require("mongoose");
+const mongoose = require("mongoose");
 
-module.exports = new Schema({
+let Product = new mongoose.Schema({
   // _id: Types.ObjectId,
   name: {
     type: String,
@@ -16,3 +16,4 @@ module.exports = new Schema({
   },
   category: String,
 });
+module.exports = mongoose.model('Product', Product)
