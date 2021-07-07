@@ -3,17 +3,43 @@ const Product = require('../schemas/Products')
 
 // http://localhost:4001/categories
 router.get('/', function (req, res){
-    //enviar listado de todas las categorias
-    Product
-    .find()
-    .exec()
-    .then(function (product){
-        res.send(product)
-    })
-    .catch(function(){
-        res.send({message: "error"})
+    let query = {}
+
+    if (req.query.name){
+        query.name = req.query.name
+    }
+
+    if (req.query.price_min){
+        query["$and"] = [
+            {
+                price : {
+                    "$gte" : req.query.price_min
+                }
+            }
+        ]
+    }
+
+    let result = Product.find(query)
+
+    // order=price&dir=asc
+    if (req.query.order){
+      result.sort({ [req.query.order] : req.query.dir === "asc" ? 1 : -1}) 
+    }
+
+    if (req.query.start){
+        result.skip(Number(req.query.start))
+    }
+
+    result.limit(10)
+
+    result.then(results => {
+        res.send(results)
+    }).catch(err => {
+        console.log(err)
+        res.send({message : 'error'})
     })
 })
+
 
 // http://localhost:4000/categories/456
 router.get('/:id', function (req, res){
@@ -21,7 +47,12 @@ router.get('/:id', function (req, res){
     Product
     .findById(req.params.id)
     .then(function (product){
+        product.views_count = product.views_count+1
+
+        product.save().then(product => {
+
         res.send(product)
+        })
     })
     .catch(function(){
         res.send({message: "error"})

@@ -12,7 +12,16 @@ let Product = new mongoose.Schema({
   },
   stock: {
     type: Number,
+    default : 1,
     required: true,
+  },
+  views_count: {
+    type: Number,
+    default: 0
+  },
+  sold_count: {
+    type: Number,
+    default: 0,
   },
   category: String,
 });
