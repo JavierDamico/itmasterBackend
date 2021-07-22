@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 const md5 = require("md5");
 
 let User = new mongoose.Schema({
@@ -6,6 +6,7 @@ let User = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   password: {
     type: String,
@@ -31,8 +32,8 @@ User.findByToken()
 */
 
 User.statics.findByToken = function (token) {
-  return this.findOne({confirmationToken: token})
-}
+  return this.findOne({ confirmationToken: token });
+};
 
 /*
 Aca primero creo la instancia
@@ -42,7 +43,7 @@ user.findByEmail({email: '...'})
 */
 
 User.methods.findByEmail = function (cb) {
-  return mongoose.model('User').find({email : this.email}, cb)
-}
+  return mongoose.model("User").find({ email: this.email }, cb);
+};
 
-module.exports = mongoose.model('User', User)
+module.exports = mongoose.model("User", User);

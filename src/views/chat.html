@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title> 
+    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js"
+            integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg"
+            crossorigin="anonymous"></script>
+    
+</head>
+<body>
+ <ul id="conversation"></ul>   
+
+<textarea name="text" id="chat-text"></textarea>
+<button id="chat-submit">Enviar</button>
+<script>
+        const socket = io('http://localhost:5000')
+
+        let conversation = []
+        let textarea = document.getElementById('chat-text')
+        let button = document.getElementById('chat-submit')
+        let ul = document.getElementById('conversation')
+
+        function displayMessages (){
+            ul.innerHTML = ''
+            conversation.map(message => {
+                ul.innerHTML += `<li>${message.text}</li>`
+            })
+        }
+
+        button.addEventListener('click', function () {
+            socket.emit('saludo', {text: textarea.value})
+            conversation.push({text: textarea.value})
+            textarea.value = ''
+            displayMessages()
+        })
+
+
+        socket.on('respuesta', data => {
+           conversation.push(data);
+           displayMessages()
+        })
+    </script>
+</body>
+</html>
